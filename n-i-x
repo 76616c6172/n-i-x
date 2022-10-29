@@ -1,0 +1,48 @@
+#!/bin/bash
+set -e
+
+if [[ $1 == "" ]] ; then
+  echo "upgrade (upgrade all packages)"
+  echo ""
+  echo "install <package_name>"
+  echo "remove <package_name>"
+  echo ""
+  echo "log (show history)"
+  echo "ls (list installed packages)"
+  exit 0
+fi
+
+if [[ "$1" == "upgrade" ]] ; then
+# 0. Update all packages
+  /home/valar/projects/n-i-x/upgrade_all_packages.sh
+  exit 0
+fi
+
+# 0.1 Update a specific package?
+# 0.2 mark a specific package to be held back/not updated/locked to a specific version?
+
+if [[ "$1" == "install" ]] ; then
+# 1. install new package
+  /home/valar/projects/n-i-x/install_new_package.sh $2
+  exit 0
+fi
+if [[ "$1" == "remove" ]] ; then
+# 2. delete package
+  /home/valar/projects/n-i-x/remove_package.sh $2
+  exit 0
+fi
+if [[ "$1" == "log" ]] ; then
+# 3 show history of packages
+  nix profile history
+  exit 0
+fi
+if [[ "$1" == "ls" ]] ; then
+# 4. list installed packages
+  nix profile list
+# list_installed_packages.sh
+  exit 0
+fi
+# 5. Install all packages based on manifest?
+#
+# Otherwisse use nix properly
+nix "$@"
