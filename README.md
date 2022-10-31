@@ -18,6 +18,7 @@ nix (the cli tool)
 bash  
 git  
 jq  
+sort
 sed  
 
 ## Usage examples:
