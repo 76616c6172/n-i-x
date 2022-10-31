@@ -10,6 +10,7 @@ if [[ $1 == "" ]] ; then
   echo " nix log (show history)"
   echo " nix ls (list installed packages)"
   echo " nix search <package_name> (search for pkgs in the nixpkgs repo)"
+  echo " nix shell <package_name ...> (drop into a nix shell with the specified packages)"
   exit 0
 fi
 
@@ -51,22 +52,19 @@ if [[ "$1" == "shell" ]] ; then
   # drop into a nix shell with specified packages
   INPUT=( "$@" )
   PKGS=()
-
-skip=0
+  skip=0
   for e in "${INPUT[@]}" ; do
     if [[ $skip == 0 ]] ; then
       skip=1
       continue
     fi
     PKGS+="nixpkgs#$e "
-    echo "$e"
   done
-  #echo nix shell $PKGS
-  nix shell "$PKGS"
+  nix shell $PKGS 2>/dev/null # FIXME: idk why but even when it works nix shell exists with a non 0 error, very annoying
   exit 0
 fi
 # 6. Install all packages based on manifest?
 # nix rebuild or nix build?
 #
-# Otherwisse use nix properly
+# Otherwisse use nix CLI directly
 nix "$@"
