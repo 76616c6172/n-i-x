@@ -1,0 +1,3 @@
+#!/bin/bash
+
+sudo cp -f *n-i-x* /usr/bin/
