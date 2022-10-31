@@ -5,4 +5,4 @@ NIX_OP="$1"
 NEW_PACKAGE="$2"
 
 cp -f $HOME/.nix-profile/manifest.json $HOME/.config/n-i-x/manifest.json
-cd $HOME/.config/n-i-x && git add "manifest.json" && git commit -m "$NIX_OP $NEW_PACKAGE" &>/dev/null
+cd $HOME/.config/n-i-x && git add "manifest.json" && git commit -m "$NIX_OP $NEW_PACKAGE" &>/dev/null && git push
