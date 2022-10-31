@@ -14,8 +14,11 @@ if [[ $1 == "" ]] ; then
 fi
 
 if [[ "$1" == "upgrade" ]] ; then
-# 0. Update all packages
+  if [[ "$2" == "" ]] ; then
   n-i-x-upgrade_all_packages
+  exit 0
+  fi
+  n-i-x-upgrade_single_package "$2"
   exit 0
 fi
 
@@ -23,23 +26,19 @@ fi
 # 0.2 mark a specific package to be held back/not updated/locked to a specific version?
 
 if [[ "$1" == "install" ]] ; then
-# 1. install new package
   n-i-x-install_new_package $2
   exit 0
 fi
 if [[ "$1" == "remove" ]] ; then
-# 2. delete package
   n-i-x-remove_package $2
   exit 0
 fi
 if [[ "$1" == "log" ]] ; then
-# 3 show history of packages
+  # 3 show history of packages
   nix profile history
   exit 0
 fi
 if [[ "$1" == "ls" ]] ; then
-# 4. list installed packages
-  # nix profile list
   n-i-x-list_installed_packages
   exit 0
 fi
