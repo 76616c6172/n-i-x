@@ -21,7 +21,7 @@ jq
 sort
 sed  
 
-## Usage examples:
+## Usage:
 
 > **n-i-x is intended to be aliased: `alias nix="n-i-x"`**
 
@@ -32,5 +32,6 @@ nix remove <package_name>
 nix log (show history)  
 nix ls (list installed packages)  
 nix show <package_name> (shows pkg if it exists in the nixpkgs repo)
+nix search <term> (search nixpkgs for pkgs with <name> or part of description)
 nix shell <packages...> (drop into ephemeral nix shell with specified packages)  
 

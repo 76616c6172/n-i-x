@@ -9,7 +9,8 @@ if [[ $1 == "" ]] ; then
   echo " nix remove <package_name>"
   echo " nix log (show history)"
   echo " nix ls (list installed packages)"
-  echo " nix show <package_name> (shows pkg if it exists in the nixpkgs repo)"
+  echo " nix show <package_name> (show pkg if it exists in the nixpkgs repo)"
+  echo " nix search <term> (search nixpkgs for pkgs with <name> or part of description)"
   echo " nix shell <package_name ...> (drop into a nix shell with the specified packages)"
   exit 0
 fi
@@ -39,8 +40,11 @@ if [[ "$1" == "ls" ]] ; then
   exit 0
 fi
 if [[ "$1" == "show" ]] ; then
-  # search for packages in the nixpkgs repo
   nix search "nixpkgs#$2"
+  exit 0
+fi
+if [[ "$1" == "search" ]] ; then
+  nix search nixpkgs "$2"
   exit 0
 fi
 if [[ "$1" == "shell" ]] ; then
