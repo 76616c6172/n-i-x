@@ -1,6 +1,19 @@
 #!/bin/bash
 set -e
 
+# Execute on startup
+if [[ ! -d $HOME/.config/n-i-x ]] ; then
+  echo "creating $HOME/.config/n-i-x/"
+  mkdir -p $HOME/.config/n-i-x/
+  echo "success!"
+  DIR=$PWD
+  echo "saving nix manifest"
+  touch $HOME/.config/n-i-x/manifest.json
+  cd $HOME/.config/n-i-x && git init && git branch -m master && git add . && git commit -m "initial commit (created by n-i-x)"
+  n-i-x-save_new_manifest "save" "manifest.json"
+  echo "success!"
+fi
+
 # Print usage information
 if [[ $1 == "" ]] ; then
   echo "usage:"
