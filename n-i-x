@@ -59,7 +59,7 @@ if [[ "$1" == "shell" ]] ; then
     fi
     PKGS+="nixpkgs#$e "
   done
-  nix shell $PKGS
+  (nix shell $PKGS)
   exit 0
 fi
 if [[ "$1" == "rollback" ]] ; then
