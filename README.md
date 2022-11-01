@@ -36,3 +36,12 @@ nix search <term> (search nixpkgs for pkgs with <name> or part of description)
 nix shell <packages...> (drop into ephemeral nix shell with specified packages)  
 nix rollback (roll back one generation from the nix log output)  
 nix rollback <number> (roll back to generation <number> from the nix log output)  
+
+
+## Installation
+
+**Requires** `cat "experimental-features = nix-command flakes" >> $HOME/.config/nix/nix.conf`
+
+```bash
+nix profile install 'github:76616c6172/n-i-x#n-i-x' --refresh
+```
