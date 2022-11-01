@@ -22,10 +22,6 @@ if [[ "$1" == "upgrade" ]] ; then
   n-i-x-upgrade_single_package "$2"
   exit 0
 fi
-
-# 0.1 Update a specific package?
-# 0.2 mark a specific package to be held back/not updated/locked to a specific version?
-
 if [[ "$1" == "install" ]] ; then
   n-i-x-install_new_package $2
   exit 0
@@ -35,7 +31,6 @@ if [[ "$1" == "remove" ]] ; then
   exit 0
 fi
 if [[ "$1" == "log" ]] ; then
-  # 3 show history of packages
   nix profile history
   exit 0
 fi
@@ -63,8 +58,5 @@ if [[ "$1" == "shell" ]] ; then
   nix shell $PKGS
   exit 0
 fi
-# 6. Install all packages based on manifest?
-# nix rebuild or nix build?
-#
 # Otherwisse use nix CLI directly
 nix "$@"
