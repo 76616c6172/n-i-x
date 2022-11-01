@@ -1,20 +1,13 @@
 #!/bin/bash
 set -e
-
-# Execute on startup
-if [[ ! -d $HOME/.config/n-i-x ]] ; then
-  echo "creating $HOME/.config/n-i-x/"
-  mkdir -p $HOME/.config/n-i-x/
+if [[ ! -d $HOME/.config/n-i-x ]] ; then # Execute on startup
+  echo "creating $HOME/.config/n-i-x/" ; mkdir -p $HOME/.config/n-i-x/
   echo "success!"
   DIR=$PWD
-  echo "saving nix manifest"
-  touch $HOME/.config/n-i-x/manifest.json
+  echo "saving nix manifest" ; touch $HOME/.config/n-i-x/manifest.json
   cd $HOME/.config/n-i-x && git init && git branch -m master && git add . && git commit -m "initial commit (created by n-i-x)"
-  n-i-x-save_new_manifest "save" "manifest.json"
-  echo "success!"
+  n-i-x-save_new_manifest "save" "manifest.json" ; echo "success!"
 fi
-
-# Print usage information
 if [[ $1 == "" ]] ; then
   echo "usage:"
   echo " nix upgrade (upgrade all packages)"
@@ -29,38 +22,29 @@ if [[ $1 == "" ]] ; then
   echo " nix rollback <number> (roll back to generation <number> from the nix log output)"
   exit 0
 fi
-
 if [[ "$1" == "upgrade" ]] ; then
   if [[ "$2" == "" ]] ; then
-  n-i-x-upgrade_all_packages
-  exit 0
+  n-i-x-upgrade_all_packages ; exit 0
   fi
-  n-i-x-upgrade_single_package "$2"
-  exit 0
+  n-i-x-upgrade_single_package "$2" ; exit 0
 fi
 if [[ "$1" == "install" ]] ; then
-  n-i-x-install_new_package $2
-  exit 0
+  n-i-x-install_new_package $2 ; exit 0
 fi
 if [[ "$1" == "remove" ]] ; then
-  n-i-x-remove_package $2
-  exit 0
+  n-i-x-remove_package $2 ; exit 0
 fi
 if [[ "$1" == "log" ]] ; then
-  nix profile history
-  exit 0
+  nix profile history ; exit 0
 fi
 if [[ "$1" == "ls" ]] ; then
-  n-i-x-list_installed_packages
-  exit 0
+  n-i-x-list_installed_packages ; exit 0
 fi
 if [[ "$1" == "show" ]] ; then
-  nix search "nixpkgs#$2"
-  exit 0
+  nix search "nixpkgs#$2" ; exit 0
 fi
 if [[ "$1" == "search" ]] ; then
-  nix search nixpkgs "$2"
-  exit 0
+  nix search nixpkgs "$2" ; exit 0
 fi
 if [[ "$1" == "shell" ]] ; then
   # drop into a nix shell with specified packages
@@ -74,27 +58,14 @@ if [[ "$1" == "shell" ]] ; then
     fi
     PKGS+="nixpkgs#$e "
   done
-  (nix shell $PKGS)
-  exit 0
+  (nix shell $PKGS) ; exit 0
 fi
 if [[ "$1" == "rollback" ]] ; then
   if [[ "$2" == "" ]] ; then
   nix profile rollback
-  n-i-x-save_new_manifest "rollback" " "
-  exit 0
+  n-i-x-save_new_manifest "rollback" " " ; exit 0
   fi
   nix profile rollback --to $2
-  n-i-x-save_new_manifest "rollback to" "$2"
-  exit 0
+  n-i-x-save_new_manifest "rollback to" "$2" ; exit 0
 fi
-
-
-
-
-
-
-
-
-
-# Otherwisse use nix CLI directly
-nix "$@"
+nix "$@" # Otherwisse use nix CLI directly

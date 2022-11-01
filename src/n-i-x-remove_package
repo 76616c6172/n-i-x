@@ -1,5 +1,4 @@
 #!/bin/bash
 set -e
-
 nix profile remove "legacyPackages.x86_64-linux.$1"
 n-i-x-save_new_manifest "remove $1"

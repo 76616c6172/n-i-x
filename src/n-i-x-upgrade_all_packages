@@ -1,6 +1,5 @@
 #!/bin/bash
 set -e
-
 export NIXPKGS_ALLOW_UNFREE=1
 nix profile upgrade '.*' --impure
 n-i-x-save_new_manifest "upgrade all packages" &>/dev/null

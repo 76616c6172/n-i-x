@@ -20,11 +20,10 @@
           pkgs = nixpkgsFor.${system};
         in
         {
-          # The default package for 'nix build'. This makes sense if the
-          # flake provides only one package or there is a clear "main"
-          # package.
-          default = pkgs.stdenv.mkDerivation {
+          # default will be infered by n-i-x
+          n-i-x = pkgs.stdenv.mkDerivation {
             pname = "n-i-x";
+            name = "n-i-x";
             inherit version;
             src = ./src;
 						installPhase =
