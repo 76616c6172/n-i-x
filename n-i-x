@@ -62,5 +62,24 @@ if [[ "$1" == "shell" ]] ; then
   nix shell $PKGS
   exit 0
 fi
+if [[ "$1" == "rollback" ]] ; then
+  if [[ "$2" == "" ]] ; then
+  nix profile rollback
+  n-i-x-save_new_manifest "rollback" " "
+  exit 0
+  fi
+  nix profile rollback --to $2
+  n-i-x-save_new_manifest "rollback to" "$2"
+  exit 0
+fi
+
+
+
+
+
+
+
+
+
 # Otherwisse use nix CLI directly
 nix "$@"
