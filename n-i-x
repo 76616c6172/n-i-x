@@ -60,7 +60,7 @@ if [[ "$1" == "shell" ]] ; then
     fi
     PKGS+="nixpkgs#$e "
   done
-  nix shell $PKGS 2>/dev/null # FIXME: idk why but even when it works nix shell exists with a non 0 error, very annoying
+  nix shell $PKGS
   exit 0
 fi
 # 6. Install all packages based on manifest?
