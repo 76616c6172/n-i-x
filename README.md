@@ -18,7 +18,7 @@ nix (the cli tool)
 bash  
 git  
 jq  
-sort
+sort  
 sed  
 
 ## Usage:
@@ -34,3 +34,5 @@ nix ls (list installed packages)
 nix show <package_name> (shows pkg if it exists in the nixpkgs repo)  
 nix search <term> (search nixpkgs for pkgs with <name> or part of description)  
 nix shell <packages...> (drop into ephemeral nix shell with specified packages)  
+nix rollback (roll back one generation from the nix log output)  
+nix rollback <number> (roll back to generation <number> from the nix log output)  
