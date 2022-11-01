@@ -31,6 +31,6 @@ nix install <package_name>
 nix remove <package_name>  
 nix log (show history)  
 nix ls (list installed packages)  
-nix search <package_name> (search for pkgs in the nixpkgs repo)  
+nix show <package_name> (shows pkg if it exists in the nixpkgs repo)
 nix shell <packages...> (drop into ephemeral nix shell with specified packages)  
 
