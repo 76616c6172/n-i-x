@@ -4,5 +4,5 @@ set -e
 MANIFEST_PATH="/$HOME/.config/n-i-x/manifest.json"
 
 #echo "Currently installed:"
-jq '.[] | .[] | .attrPath' $MANIFEST_PATH 2>/dev/null | sed 's/legacyPackages.x86_64-linux.//g' | sort |  jq
+jq '.[] | .[] | .attrPath' $MANIFEST_PATH 2>/dev/null | sed 's/legacyPackages.x86_64-linux.//g' | jq
 
