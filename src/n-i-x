@@ -1,6 +1,5 @@
 #!/bin/bash
 set -e
-echo "just testing"
 if [[ ! -d $HOME/.config/n-i-x ]] ; then # Execute on startup
   echo "creating $HOME/.config/n-i-x/" ; mkdir -p $HOME/.config/n-i-x/
   echo "success!"
