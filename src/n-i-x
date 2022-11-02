@@ -1,76 +1,77 @@
 #!/bin/bash
 set -e
-if [[ ! -d $HOME/.config/n-i-x ]] ; then # Execute on startup
-  echo "creating $HOME/.config/n-i-x/" ; mkdir -p $HOME/.config/n-i-x/
+if [[ ! -d "$HOME/.config/n-i-x" ]] ; then # Execute on startup
+  echo "creating $HOME/.config/n-i-x/" ; mkdir -p "$HOME/.config/n-i-x/"
   echo "success!"
-  DIR=$PWD
-  echo "saving nix manifest" ; touch $HOME/.config/n-i-x/manifest.json
-  cd $HOME/.config/n-i-x && git init && git branch -m master && git add . && git commit -m "initial commit (created by n-i-x)"
+  echo "saving nix manifest" ; touch "$HOME/.config/n-i-x/manifest.json"
+  cd "$HOME/.config/n-i-x" && git init && git branch -m master && git add . && git commit -m "initial commit (created by n-i-x)"
   n-i-x-save_new_manifest "save" "manifest.json" ; echo "success!"
 fi
-if [[ $1 == "" ]] ; then
-  echo "usage:"
-  echo " nix upgrade (upgrade all packages)"
-  echo " nix install <package_name>"
-  echo " nix remove <package_name>"
-  echo " nix log (show history)"
-  echo " nix ls (list installed packages)"
-  echo " nix show <package_name> (show pkg if it exists in the nixpkgs repo)"
-  echo " nix search <term> (search nixpkgs for pkgs with <name> or part of description)"
-  echo " nix shell <package_name ...> (drop into a nix shell with the specified packages)"
-  echo " nix rollback (roll back one generation from the nix log output)"
-  echo " nix rollback <number> (roll back to generation <number> from the nix log output)"
-  echo " nix manifest (show nix manifest.json for the current profile)"
-  exit 0
-fi
-if [[ "$1" == "upgrade" ]] ; then
-  if [[ "$2" == "" ]] ; then
-  n-i-x-upgrade_all_packages ; exit 0
-  fi
-  n-i-x-upgrade_single_package "$2" ; exit 0
-fi
-if [[ "$1" == "install" ]] ; then
-  n-i-x-install_new_package $2 ; exit 0
-fi
-if [[ "$1" == "remove" ]] ; then
-  n-i-x-remove_package $2 ; exit 0
-fi
-if [[ "$1" == "log" ]] ; then
-  nix profile history ; exit 0
-fi
-if [[ "$1" == "ls" ]] ; then
-  n-i-x-list_installed_packages ; exit 0
-fi
-if [[ "$1" == "show" ]] ; then
-  nix search "nixpkgs#$2" ; exit 0
-fi
-if [[ "$1" == "search" ]] ; then
-  nix search nixpkgs "$2" ; exit 0
-fi
-if [[ "$1" == "shell" ]] ; then
-  # drop into a nix shell with specified packages
-  INPUT=( "$@" )
-  PKGS=()
-  skip=0
-  for e in "${INPUT[@]}" ; do
-    if [[ $skip == 0 ]] ; then
-      skip=1
-      continue
+case "$1" in
+  "")
+    echo "usage:"
+    echo " nix upgrade (upgrade all packages)"
+    echo " nix install <package_name>"
+    echo " nix remove <package_name>"
+    echo " nix log (show history)"
+    echo " nix ls (list installed packages)"
+    echo " nix show <package_name> (show pkg if it exists in the nixpkgs repo)"
+    echo " nix search <term> (search nixpkgs for pkgs with <name> or part of description)"
+    echo " nix shell <package_name ...> (drop into a nix shell with the specified packages)"
+    echo " nix rollback (roll back one generation from the nix log output)"
+    echo " nix rollback <number> (roll back to generation <number> from the nix log output)"
+    echo " nix manifest (show nix manifest.json for the current profile)"
+    exit 0
+    ;;
+  "upgrade")
+    if [[ "$2" == "" ]] ; then
+      n-i-x-upgrade_all_packages ; exit 0
     fi
-    PKGS+="nixpkgs#$e "
-  done
-  (nix shell $PKGS) ; exit 0
-fi
-if [[ "$1" == "rollback" ]] ; then
-  if [[ "$2" == "" ]] ; then
-  nix profile rollback
-  n-i-x-save_new_manifest "rollback" " " ; exit 0
-  fi
-  nix profile rollback --to $2
-  n-i-x-save_new_manifest "rollback to" "$2" ; exit 0
-fi
-if [[ "$1" == "manifest" ]] ; then
-  jq . "$HOME/.nix-profile/manifest.json" ; exit 0
-fi
-
-nix "$@" # Otherwisse use nix CLI directly
+    n-i-x-upgrade_single_package "$2"
+  ;;
+  "install")
+    n-i-x-install_new_package "$2"
+  ;;
+  "remove")
+    n-i-x-remove_package "$2"
+  ;;
+  "log")
+    nix profile "history"
+  ;;
+  "ls")
+    n-i-x-list_installed_packages
+  ;;
+  "show")
+    nix search "nixpkgs#$2"
+  ;;
+  "search")
+    nix search nixpkgs "$2"
+  ;;
+  "shell") # drop into a nix shell with specified packages
+    INPUT=( "$@" )
+    PKGS=()
+    skip=0
+    for e in "${INPUT[@]}" ; do
+      if [[ $skip == 0 ]] ; then
+        skip=1
+        continue
+      fi
+      PKGS+="nixpkgs#$e "
+    done
+    (nix shell $PKGS)
+  ;;
+  "rollback") # roll back by -1 generation if no generation specified
+    if [[ "$2" == "" ]] ; then
+    nix profile rollback
+    n-i-x-save_new_manifest "rollback" " " ; exit 0
+    fi # if generation is specified roll back to that one instead
+    nix profile rollback --to "$2"
+    n-i-x-save_new_manifest "rollback to" "$2"
+  ;;
+  "manifest")
+    jq . "$HOME/.nix-profile/manifest.json"
+  ;;
+  *)
+    nix "$@" # Otherwisse use nix CLI directly
+  ;;
+esac
