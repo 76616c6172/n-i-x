@@ -1,6 +1,5 @@
 {
-	description = "n-i-x is a wrapper for the nix CLI";
-  # Nixpkgs / NixOS version to use.
+  description = "n-i-x is a wrapper for the nix CLI";
   inputs.nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
   outputs = { self, nixpkgs }:
     let
@@ -20,15 +19,12 @@
           pkgs = nixpkgsFor.${system};
         in
         {
-          # default will be infered by n-i-x
           n-i-x = pkgs.stdenv.mkDerivation {
-            pname = "n-i-x";
-            name = "n-i-x";
-            inherit version;
+            pname = "n-i-x"; inherit version;
             src = ./src;
-						installPhase =
+            installPhase =
             ''
-            	mkdir -p $out/bin
+              mkdir -p $out/bin
               cp *n-i-x* $out/bin/
             '';
           };
