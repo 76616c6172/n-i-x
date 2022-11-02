@@ -23,7 +23,8 @@ sed
 
 ## Usage:
 
-> **n-i-x is intended to be aliased: `alias nix="n-i-x"`**
+**n-i-x** is intended to be aliased such:  
+`alias nix="n-i-x"`
 
 nix upgrade (upgrade all packages)  
 nix upgrade <package_name> (upgrade specific package)  
@@ -40,7 +41,8 @@ nix rollback <number> (roll back to generation <number> from the nix log output)
 
 ## Installation
 
-**Requires** `cat "experimental-features = nix-command flakes" >> $HOME/.config/nix/nix.conf`
+**Requires**  
+`cat "experimental-features = nix-command flakes" >> $HOME/.config/nix/nix.conf`
 
 ```bash
 nix profile install 'github:76616c6172/n-i-x#n-i-x' --refresh
