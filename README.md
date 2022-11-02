@@ -26,18 +26,18 @@ sed
 **n-i-x** is intended to be aliased such:  
 `alias nix="n-i-x"`
 
-nix upgrade (upgrade all packages)  
-nix upgrade <package_name> (upgrade specific package)  
-nix install <package_name>  
-nix remove <package_name>  
-nix log (show history)  
-nix ls (list installed packages)  
-nix show <package_name> (shows pkg if it exists in the nixpkgs repo)  
-nix search <term> (search nixpkgs for pkgs with <name> or part of description)  
-nix shell <packages...> (drop into ephemeral nix shell with specified packages)  
-nix rollback (roll back one generation from the nix log output)  
-nix rollback <number> (roll back to generation <number> from the nix log output)  
-nix manifest (show nix manifest.json for the current profile)
+**nix upgrade** upgrade all packages  
+**nix upgrade <package-name>** upgrade specific package  
+**nix install <package-name>** install package from nixpkgs repo  
+**nix remove <package-name>** remove package from the profile  
+**nix log** show history of package modifications  
+**nix ls** list installed packages in chronological order  
+**nix show <package-name>** shows pkg if it exists in the nixpkgs repo  
+**nix search <term>** search nixpkgs repo for partial matches in name/description  
+**nix shell <packages..>** drop into ephemeral nix shell env with specified nixpkgs  
+**nix rollback** roll back one generation from the nix log output  
+**nix rollback <number>** roll back to a specific generation as seen in nix log output  
+**nix manifest** show nix manifest.json for the current profile  
 
 n-i-x automatically stores a "live copy" of ~/.nix-profile/manifest.json in ~/.config/n-i-x/manifest.json under version control.
 The idea is to be able to easily replicate this single profile on other machines by copying it to ~/.nix-profile/manifest.json and running `n-i-x upgrade`.
