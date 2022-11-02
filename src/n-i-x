@@ -20,6 +20,7 @@ if [[ $1 == "" ]] ; then
   echo " nix shell <package_name ...> (drop into a nix shell with the specified packages)"
   echo " nix rollback (roll back one generation from the nix log output)"
   echo " nix rollback <number> (roll back to generation <number> from the nix log output)"
+  echo " nix manifest (show nix manifest.json for the current profile)"
   exit 0
 fi
 if [[ "$1" == "upgrade" ]] ; then
@@ -68,4 +69,8 @@ if [[ "$1" == "rollback" ]] ; then
   nix profile rollback --to $2
   n-i-x-save_new_manifest "rollback to" "$2" ; exit 0
 fi
+if [[ "$1" == "manifest" ]] ; then
+  jq . "$HOME/.nix-profile/manifest.json" ; exit 0
+fi
+
 nix "$@" # Otherwisse use nix CLI directly
