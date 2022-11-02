@@ -37,7 +37,10 @@ nix search <term> (search nixpkgs for pkgs with <name> or part of description)
 nix shell <packages...> (drop into ephemeral nix shell with specified packages)  
 nix rollback (roll back one generation from the nix log output)  
 nix rollback <number> (roll back to generation <number> from the nix log output)  
+nix manifest (show nix manifest.json for the current profile)
 
+n-i-x automatically stores a "live copy" of ~/.nix-profile/manifest.json in ~/.config/n-i-x/manifest.json under version control.
+The idea is to be able to easily replicate this single profile on other machines by copying it to ~/.nix-profile/manifest.json and running `n-i-x upgrade`.
 
 ## Installation
 
