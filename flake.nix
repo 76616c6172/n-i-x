@@ -1,7 +1,7 @@
 {
 	description = "n-i-x is a wrapper for the nix CLI";
   # Nixpkgs / NixOS version to use.
-	inputs.nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+  inputs.nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
   outputs = { self, nixpkgs }:
     let
       # Generate a user-friendly version number.
