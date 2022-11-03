@@ -79,6 +79,6 @@ case "$1" in
     jq . "$HOME/.nix-profile/manifest.json"
   ;;
   *)
-    nix "$@" # Otherwisse use nix CLI directly
+    nix "$@" # Otherwise use nix CLI directly
   ;;
 esac
