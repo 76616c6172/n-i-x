@@ -1,5 +1,6 @@
 #!/bin/bash
 set -e
+USR_SHELL="zsh"
 if [[ ! -d "$HOME/.config/n-i-x" ]] ; then # Execute on startup
   echo "creating $HOME/.config/n-i-x/" ; mkdir -p "$HOME/.config/n-i-x/"
   echo "success!"
@@ -17,6 +18,7 @@ case "$1" in
     echo " nix ls (list installed packages)"
     echo " nix show <package_name> (show pkg if it exists in the nixpkgs repo)"
     echo " nix search <term> (search nixpkgs for pkgs with <name> or part of description)"
+    echo " nix shell (drop into nix shell environment specified in ./flake.nix or parent ../flake.nix)"
     echo " nix shell <package_name ...> (drop into a nix shell with the specified packages)"
     echo " nix rollback (roll back one generation from the nix log output)"
     echo " nix rollback <number> (roll back to generation <number> from the nix log output)"
@@ -47,7 +49,12 @@ case "$1" in
   "search")
     nix search nixpkgs "$2"
   ;;
-  "shell") # drop into a nix shell with specified packages
+  "shell")
+    # if no packages specified assume user wants to use nix develop
+    if [[ "$2" == "" || "$2" == "." ]] ; then
+      (nix develop -c "$USR_SHELL"); exit 0
+    fi
+    # drop into a nix shell with specified packages
     INPUT=( "$@" )
     PKGS=()
     skip=0

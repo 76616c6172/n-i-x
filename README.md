@@ -34,6 +34,7 @@ sed
 **nix ls** list installed packages in chronological order  
 **nix show <package-name>** shows pkg if it exists in the nixpkgs repo  
 **nix search <term>** search nixpkgs repo for partial matches in name/description  
+**nix shell** drop into nix shell environment specified in ./flake.nix or parent ../flake.nix  
 **nix shell <packages..>** drop into ephemeral nix shell env with specified nixpkgs  
 **nix rollback** roll back one generation from the nix log output  
 **nix rollback <number>** roll back to a specific generation as seen in nix log output  
