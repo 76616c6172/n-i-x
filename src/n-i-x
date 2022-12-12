@@ -65,7 +65,7 @@ case "$1" in
       fi
       PKGS+="nixpkgs#$e "
     done
-    (nix shell $PKGS)
+    (nix shell $PKGS --impure)
   ;;
   "rollback") # roll back by -1 generation if no generation specified
     if [[ "$2" == "" ]] ; then
