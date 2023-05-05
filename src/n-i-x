@@ -12,6 +12,7 @@ case "$1" in
   "")
     echo "usage:"
     echo " nix upgrade (upgrade all packages)"
+    echo " nix clean (clean up cache)"
     echo " nix install <package_name>"
     echo " nix remove <package_name>"
     echo " nix log (show history)"
@@ -45,6 +46,9 @@ case "$1" in
   ;;
   "show")
     nix search "nixpkgs#$2"
+  ;;
+  "clean")
+  nix-collect-garbage -d
   ;;
   "search")
     nix search nixpkgs "$2"
